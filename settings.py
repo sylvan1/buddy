@@ -24,6 +24,7 @@ THIRD_PARTY_APPS = (
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.github',
+    'django_extensions',  # useful stuff, ex. shell_plus
 )
 
 BUDDY_APPS = (
@@ -91,7 +92,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'users.User'
 
 ACCOUNT_ADAPTER = 'users.adapters.AccountAdapter'
@@ -104,7 +104,7 @@ SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
         'METHOD': 'js_sdk',  # 'oauth2',
         'SCOPE': ['email', 'public_profile', 'user_friends'],
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        # 'AUTH_PARAMS': {'auth_type': 'reauthenticate'},  # Should we always ask for password?
         'FIELDS': [
             'id',
             'email',
@@ -130,3 +130,11 @@ SOCIALACCOUNT_PROVIDERS = {
 
 LOGIN_REDIRECT_URL = 'users:redirect'
 LOGIN_URL = 'account_login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
