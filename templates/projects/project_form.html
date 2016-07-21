@@ -18,8 +18,20 @@
     {% endif %}
 
     <form action="" method="post">{% csrf_token %}
+
         {{ form.as_p }}
+
+        <h3>Skills:</h3>
+            {{ subform.management_form }}
+        
+            {% for skill_form in subform %}
+                <div class="skill-formset">
+                    {{ skill_form.id }}
+                    {{ skill_form.programming_lang }}
+                </div>
+            {% endfor %}
+
         <input type="submit" value={% if object %}"Save"{% else %}"Create"{% endif %}/>
     </form>
-	
+
 {% endblock %}

@@ -6,7 +6,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
-from .models import User
+from .models import User, Skill
+admin.site.register(Skill)
 
 
 class MyUserChangeForm(UserChangeForm):
@@ -36,3 +37,7 @@ class MyUserCreationForm(UserCreationForm):
 class UserAdmin(AuthUserAdmin):
     form = MyUserChangeForm
     add_form = MyUserCreationForm
+
+@admin.register(Skill)
+class SkillAdmin(admin.ModelAdmin):
+    pass

@@ -17,7 +17,7 @@ urlpatterns = [
     ),
 
     url(
-	regex=r'^(?P<slug>[-\w]+)/$',
+        regex=r'^(?P<slug>[-\w]+)/$',
         view=views.ProjectDetailView.as_view(),
         name='detail'
     ),

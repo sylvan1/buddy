@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from braces.views import LoginRequiredMixin
-from django.core.urlresolvers import reverse
-from django.views.generic import DetailView, ListView, RedirectView, UpdateView
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.views.generic import DetailView, ListView, RedirectView, UpdateView, DeleteView
 
 from .models import User
 
@@ -36,3 +36,10 @@ class UserListView(LoginRequiredMixin, ListView):
     model = User
     slug_field = "username"
     slug_url_kwarg = "username"
+
+class UserDeleteView(DeleteView):
+    model = User
+    success_url = reverse_lazy('projects:list')
+
+    def get_object(self):
+        return User.objects.get(username=self.request.user.username)
