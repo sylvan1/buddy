@@ -24,6 +24,9 @@ class UserUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserUpdateForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
+        for field in self.fields:
+            if isinstance(self.fields[field].widget, forms.TextInput):
+                self.fields[field].widget.attrs['placeholder'] = self.fields[field].label.capitalize()
 
     def save(self, commit=True):
         instance = super(UserUpdateForm, self).save(commit=True)
