@@ -7,6 +7,7 @@
 
 <div class="container">
     <h2>Project name: {{ object.name }}</h2>
+    <p>Project owner: {{ object.owner }}</p>
     <p>{{ object.description }} </p>
     <p>Number of users required: {{ object.number_of_users_required }}</p>
     <p>Expiration date: {{ object.expiration_date }}</p>
@@ -30,7 +31,9 @@
     {% endif %}
 </div>
 
+{% if user.is_authenticated and user == object.owner %}
 <p><a href = "{% url 'projects:update' object.slug %}">Update the project</a></p>
 <p><a href = "{% url 'projects:delete' object.slug %}">Delete the project</a></p>
+{% endif %}
 
 {% endblock content %}

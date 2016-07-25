@@ -6,6 +6,7 @@ from users.models import Skill, User
 
 
 class Project(models.Model):
+    owner = models.ForeignKey(User, related_name='owner')
     users = models.ManyToManyField(User)
     skills = models.ManyToManyField(Skill, blank=True)
     name = models.CharField(
