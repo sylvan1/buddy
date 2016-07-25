@@ -5,9 +5,15 @@
 
 {% block content %}
 
-<form action="" method="post">{% csrf_token %}
-    <p>Are you sure you want to delete {{ object.name }} project?</p>
-    <input type="submit" value="Confirm"/>
-</form>
+{% if user.is_authenticated and user == object.owner %}
+
+    <form action="" method="post">{% csrf_token %}
+        <p>Are you sure you want to delete {{ object.name }} project?</p>
+        <input type="submit" value="Confirm"/>
+    </form>
+
+{% else %}
+    <p>Only {{ object.owner }} can delete project {{ object.name }}.</p>
+{% endif %}
 
 {% endblock %}

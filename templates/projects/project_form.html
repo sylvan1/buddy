@@ -11,27 +11,47 @@
 
 {% block content %}
 
-    {% if object %}
-        <h2>Edit {{ project.name }}</h2>
-    {% else %}
-        <h2>New</h2>
-    {% endif %}
+    {% if user.is_authenticated %}
 
-    <form action="" method="post">{% csrf_token %}
+        {% if object and user == object.owner %}
+            <h2>Edit {{ project.name }}</h2>
+        {% elif not object %}
+            <h2>New</h2>
+        {% endif %}
+    
+        {% if object and user == object.owner or not object%}
 
-        {{ form.as_p }}
+        <form action="" method="post">{% csrf_token %}
 
-        <h3>Skills:</h3>
-            {{ subform.management_form }}
+            {{ form.as_p }}
+
+            <h3>Skills:</h3>
+                {{ subform.management_form }}
         
-            {% for skill_form in subform %}
-                <div class="skill-formset">
-                    {{ skill_form.id }}
-                    {{ skill_form.programming_lang }}
-                </div>
-            {% endfor %}
+                {% for skill_form in subform %}
+                    <div class="skill-formset">
+                        {{ skill_form.id }}
+                        {{ skill_form.programming_lang }}
+                    </div>
+                {% endfor %}
 
-        <input type="submit" value={% if object %}"Save"{% else %}"Create"{% endif %}/>
-    </form>
+            <input type="submit" value={% if object %}"Save"{% else %}"Create"{% endif %}/>
+        </form>
+
+        {% else %}
+
+            <h2>Only {{ object.owner }} can update project {{ object.name }}.</h2>
+
+        {% endif %}
+
+    {% else %}
+
+        {% if object %}
+            <h2>Only {{ object.owner }} can update project {{ object.name }}.</h2>
+        {% else %}
+            <h2>Log in to create a new project</h2>
+        {% endif %}
+        
+    {% endif %}
 
 {% endblock %}

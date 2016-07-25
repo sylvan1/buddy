@@ -32,6 +32,10 @@ class ProjectCreateView(CreateView):
         skill_subform = self.subform_class(request.POST)
         if form.is_valid() and skill_subform.is_valid():
             created_project = form.save(commit=False)
+            user = None
+            if request.user.is_authenticated():
+                user = request.user
+            created_project.owner = user
             created_project.save()
             for subform in skill_subform:
                 programming_lang = subform.cleaned_data.get('programming_lang')
