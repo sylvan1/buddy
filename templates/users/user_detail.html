@@ -13,6 +13,9 @@
       {% if object.name %}
         <p>{{ object.name }}</p>
       {% endif %}
+      {% if object.avatar %}
+        <img src="{{ object.avatar.url }}" style="max-width: 200px; max-height: 200px;">
+      {% endif %}
     </div>
   </div>
 
@@ -22,6 +25,7 @@
 
   <div class="col-sm-12 ">
     <a class="btn btn-primary" href="{% url 'users:update' %}">My Info</a>
+    <a class="btn btn-primary" href="{% url 'users:delete' %}">Delete Account</a>
     <a class="btn btn-primary" href="{% url 'account_email' %}">E-Mail</a>
     <!-- Your Stuff: Custom user template urls -->
   </div>

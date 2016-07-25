@@ -1,5 +1,7 @@
 from django.contrib import admin
+from projects.models import Project
 
-from .models import Project
+@admin.register(Project)
+class ProjectsAdmin(admin.ModelAdmin):
+	exclude = ('slug',)
 
-admin.site.register(Project)
