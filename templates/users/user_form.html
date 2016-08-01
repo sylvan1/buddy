@@ -1,17 +1,116 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
+{% load staticfiles i18n utils %}
 
 {% block title %}{{ user.username }}{% endblock %}
 
+{% block javascript %}
+    {{ block.super }}
+    <script src="{% static 'js/user.js' %}"></script>
+{% endblock javascript %}
+
 {% block content %}
-    <h1>{{ user.username }}</h1>
-    <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div class="control-group">
-          <div class="controls">
-            <button type="submit" class="btn">Update</button>
-          </div>
-        </div>
-    </form>
+    <div class="container">
+        <form class="form-horizontal" method="post" action="">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="avatar" style="height: 100%; width: 100%;">
+                        <img id="avatar" src="{% if object.avatar %}{{object.avatar.url }}{% endif %}" alt="Add your avatar"
+                             class="img-responsive" data-toggle="modal" data-target="#myModal">
+                    </div>
+                    <!--modal start -->
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Upload your avatar</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <span id='newAvatar' ><input id="input_avatar" type="file" class="btn"></span>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="modal-submit" type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--modal end-->
+                </div>
+                <div class="col-xs-6">
+                   <div class="form-group col-xs-10 {% if form.errors.username %}has-error{% else %} has-warning {% endif %}">
+                       {{ form.username|add_css:"form-control"|default_if_none:"" }}
+                       {% for error in form.username.errors %}
+                           <p class="msg-error">{{ error }}</p>
+                       {% endfor %}
+                   </div>
+                    <div class="form-group col-xs-10 {% if form.errors.first_name %}has-error{% endif %}">
+                        {{ form.first_name|add_css:"form-control"|default_if_none:"" }}
+                        {% for error in form.errors.first_name %}
+                            <p class="msg-error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group col-xs-10 {% if form.errors.last_name %}has-error{% endif %}">
+                        {{ form.last_name|add_css:"form-control"|default_if_none:"" }}
+                        {% for error in form.errors.last_name %}
+                            <p class="msg-error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group col-xs-10 {% if form.errors.email %}has-error{% else %}has-warning{% endif %}">
+                        {{ form.email|add_css:"form-control"|default_if_none:"" }}
+                        {% for error in form.errors.email %}
+                            <p class="msg-error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group col-xs-10 {% if form.errors.phone %}has-error{% endif %}">
+                        {{ form.phone|add_css:"form-control"|default_if_none:"" }}
+                        {% for error in form.errors.phone %}
+                            <p class="msg-error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <p>Social media</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xs-8 {% if form.errors.about_me %}has-error{% endif %}">
+                    <p>About me</p>
+                    {{ form.about_me|add_css:"form-control"|default_if_none:"" }}
+                    {% for error in form.errors.about_me %}
+                        <p class="msg-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                <div class="form-group col-xs-4">
+                    <p>Portfolio</p>
+                    <!-- my previous projects linkowanie -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xs-12">
+                    <p>My buddy projects</p>
+                    <!-- projects  -->
+                    <!-- img, img -->
+                    <!-- limit 8, mozna rozwinac-->
+                </div>
+            </div>
+            <!--<div class="row">-->
+                <!--<div class="form-group">-->
+                    <!--<p>List of know programming languages</p>-->
+                    <!--<div class="col-xs-3">-->
+                        <!--{{ form.programming_lang }}-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-3">-->
+                        <!--{{form.level|add_css:"form-control"}}-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="control-group">
+              <div class="controls">
+                <button type="submit" class="btn btn-success">Update</button>
+              </div>
+            </div>
+        </form>
+    </div>
+
 {% endblock %}

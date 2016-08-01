@@ -28,7 +28,7 @@ class User(AbstractUser):
 
 
 class Skill(models.Model):
-    programming_lang = models.CharField(_("language"), max_length=255, unique = True)
+    programming_lang = models.CharField(_("language"), max_length=255, unique=True)
     skills = models.ManyToManyField(settings.AUTH_USER_MODEL, through='SkillUser')
 
     def __str__(self):
