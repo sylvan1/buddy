@@ -18,7 +18,9 @@
     </div>
 
     {% if user.is_authenticated %}
-    <a href = "{% url 'projects:create' %}">Add new project</a>
+        <a href = "{% url 'projects:create' %}">Add new project</a>
+    {% else %}
+        You have to be logged in to create a new project.
     {% endif %}
 
 </div>
