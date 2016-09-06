@@ -30,9 +30,9 @@
         <p>No skills added.</p>
     {% endif %}
     <h3>Team members:</h3>
-    {% if object.users.all %}
+    {% if object.members.all %}
         <ul>
-        {% for member in object.users.all %}
+        {% for member in object.members.all %}
             <li>{{ member }}</li>
         {% endfor %}
         </ul>
@@ -56,7 +56,7 @@
         <p><a href = "{% url 'projects:update' object.slug %}">Update the project</a></p>
         <p><a href = "{% url 'projects:delete' object.slug %}">Delete the project</a></p>
     {% else %}
-        {% if user in object.users.all %}
+        {% if user in object.members.all %}
             <p>You are a member of this project.</p>
         {% elif user in object.i_want_to_join.all %}
             <p>You are waiting for being accepted as a member of this project.</p>
