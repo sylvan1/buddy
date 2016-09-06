@@ -61,7 +61,9 @@
         {% elif user in object.i_want_to_join.all %}
             <p>You are waiting for being accepted as a member of this project.</p>
         {% else %}
-            <button id="myBtn" class="img-responsive" data-toggle="modal" data-target="#myModal">Join the project</button>
+            <form id="joinProject" action="" method="post">{% csrf_token %}
+                <button id="myBtn" class="img-responsive">Join the project</button>
+            </form>
 
             <div id="myModal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
@@ -71,19 +73,19 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                            <button id="modal-submit" type="submit" class="btn btn-success" data-dismiss="modal">Yes</button>
+                            <button id="modalSubmit" type="submit" class="btn btn-success" data-dismiss="modal">Yes</button>
                         </div>
                     </div>
                 </div>
             </div>
             <script>
-            $(document).ready(function(){
-                $('#modal-submit').click(function(){
-                    var project = "{{object}}";
-                    var user = "{{user}}";
-                    project.i_want_to_join.add(user);
-                });
-            });
+                document.querySelector('#myBtn').onclick = function(event) {
+                    event.preventDefault()
+                    document.querySelector('#modalSubmit').onclick = function() {
+                        document.querySelector('#joinProject').submit();
+                    }
+                    $('#myModal').modal('show');
+                }
             </script>
         {% endif %}
 
