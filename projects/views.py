@@ -20,6 +20,15 @@ class ProjectListView(ListView):
 class ProjectDetailView(DetailView):
     model = Project
 
+    def post(self, request, *args, **kwargs):
+        project = self.get_object()
+        user = request.user
+        project.i_want_to_join.add(user)
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse_lazy('projects:detail', args=(self.get_object().slug,))
+
 
 class ProjectCreateView(CreateView):
     model = Project

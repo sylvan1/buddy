@@ -20,7 +20,7 @@
     </p>
     <p>URL: <a href={{ object.url }}>{{ object.url }}</a></p>
     <h3>Skills:</h3>
-    {% if object.skills %}
+    {% if object.skills.all %}
         <ul>
         {% for skill in object.skills.all %}
             <li>{{ skill.programming_lang }}</li>
@@ -29,11 +29,67 @@
     {% else %}
         <p>No skills added.</p>
     {% endif %}
+    <h3>Team members:</h3>
+    {% if object.members.all %}
+        <ul>
+        {% for member in object.members.all %}
+            <li>{{ member }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No project members yet.</p>
+    {% endif %}
+    <h3>Willing to join:</h3>
+    {% if object.i_want_to_join.all %}
+        <ul>
+        {% for candidate in object.i_want_to_join.all %}
+            <li>{{ candidate }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No project candidates yet.</p>
+    {% endif %}
 </div>
 
-{% if user.is_authenticated and user == object.owner %}
-<p><a href = "{% url 'projects:update' object.slug %}">Update the project</a></p>
-<p><a href = "{% url 'projects:delete' object.slug %}">Delete the project</a></p>
+{% if user.is_authenticated %}
+    {% if user == object.owner %}
+        <p><a href = "{% url 'projects:update' object.slug %}">Update the project</a></p>
+        <p><a href = "{% url 'projects:delete' object.slug %}">Delete the project</a></p>
+    {% else %}
+        {% if user in object.members.all %}
+            <p>You are a member of this project.</p>
+        {% elif user in object.i_want_to_join.all %}
+            <p>You are waiting for being accepted as a member of this project.</p>
+        {% else %}
+            <form id="joinProject" action="" method="post">{% csrf_token %}
+                <button id="myBtn" class="img-responsive">Join the project</button>
+            </form>
+
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Are you sure you want to join {{ object.name }} project?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                            <button id="modalSubmit" type="submit" class="btn btn-success" data-dismiss="modal">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                document.querySelector('#myBtn').onclick = function(event) {
+                    event.preventDefault()
+                    document.querySelector('#modalSubmit').onclick = function() {
+                        document.querySelector('#joinProject').submit();
+                    }
+                    $('#myModal').modal('show');
+                }
+            </script>
+        {% endif %}
+
+    {% endif %}
 {% endif %}
 
 {% endblock content %}

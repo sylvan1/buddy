@@ -24,9 +24,10 @@ class Migration(migrations.Migration):
                 ('opensource', models.BooleanField()),
                 ('url', models.URLField()),
                 ('slug', models.SlugField(unique=True)),
+                ('i_want_to_join', models.ManyToManyField(to=settings.AUTH_USER_MODEL, blank=True)),
                 ('owner', models.ForeignKey(related_name='owner', to=settings.AUTH_USER_MODEL)),
                 ('skills', models.ManyToManyField(to='users.Skill', blank=True)),
-                ('users', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
+                ('users', models.ManyToManyField(related_name='member', to=settings.AUTH_USER_MODEL, blank=True)),
             ],
         ),
     ]

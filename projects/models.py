@@ -7,7 +7,8 @@ from users.models import Skill, User
 
 class Project(models.Model):
     owner = models.ForeignKey(User, related_name='owner')
-    users = models.ManyToManyField(User)
+    members = models.ManyToManyField(User, related_name='member', blank=True)
+    i_want_to_join = models.ManyToManyField(User, blank=True)
     skills = models.ManyToManyField(Skill, blank=True)
     name = models.CharField(
         _("Name of the project"), max_length=255, unique=True)
