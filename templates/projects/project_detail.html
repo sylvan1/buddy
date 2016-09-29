@@ -44,12 +44,105 @@
         <ul>
         {% for candidate in object.i_want_to_join.all %}
             <li>{{ candidate }}</li>
+            {% if user == object.owner %}
+                <form id="acceptCandidate" action="" method="post">{% csrf_token %}
+                    <input type = "hidden" name = "accept_candidate" value = {{ candidate }} />
+                    <button id="acceptBtn" class="img-responsive" aria-label="Accept">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </form>
+
+                <div id="acceptModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Are you sure you want to accept {{ candidate }} as a team member?</h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                <button id="acceptSubmit" type="submit" class="btn btn-success" data-dismiss="modal">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <form id="rejectCandidate" action="" method="post">{% csrf_token %}
+                    <input type = "hidden" name = "reject_candidate" value = {{ candidate }} />
+                    <button id="rejectBtn" class="img-responsive" aria-label="Reject">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </form>
+
+                <div id="rejectModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Are you sure you want to reject {{ candidate }}?</h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                <button id="rejectSubmit" type="submit" class="btn btn-success" data-dismiss="modal">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         {% endfor %}
         </ul>
     {% else %}
         <p>No project candidates yet.</p>
     {% endif %}
 </div>
+
+<script>
+    var acceptBtns = document.querySelectorAll('#acceptBtn');
+    
+    var acceptModals = document.querySelectorAll('#acceptModal');
+    var acceptSubmits = document.querySelectorAll('#acceptSubmit');
+    var acceptCandidates = document.querySelectorAll('#acceptCandidate');
+
+    for (var i = 0; i < acceptBtns.length; ++i) {
+
+        (function(it){
+
+        acceptBtns[it].onclick = function(event) {
+            event.preventDefault();
+
+            acceptSubmits[it].onclick = function() {
+                acceptCandidates[it].submit();
+            }
+            
+            $(acceptModals[it]).modal('show');
+        };
+
+        })(i);
+    };
+
+
+    var rejectBtns = document.querySelectorAll('#rejectBtn');
+    
+    var rejectModals = document.querySelectorAll('#rejectModal');
+    var rejectSubmits = document.querySelectorAll('#rejectSubmit');
+    var rejectCandidates = document.querySelectorAll('#rejectCandidate');
+
+    for (var i = 0; i < rejectBtns.length; ++i) {
+
+        (function(it){
+
+        rejectBtns[it].onclick = function(event) {
+            event.preventDefault();
+
+            rejectSubmits[it].onclick = function() {
+                rejectCandidates[it].submit();
+            }
+            
+            $(rejectModals[it]).modal('show');
+        };
+
+        })(i);
+    };
+</script> 
 
 {% if user.is_authenticated %}
     {% if user == object.owner %}
@@ -62,6 +155,7 @@
             <p>You are waiting for being accepted as a member of this project.</p>
         {% else %}
             <form id="joinProject" action="" method="post">{% csrf_token %}
+                <input type = "hidden" name = "join"/>
                 <button id="myBtn" class="img-responsive">Join the project</button>
             </form>
 
@@ -80,7 +174,7 @@
             </div>
             <script>
                 document.querySelector('#myBtn').onclick = function(event) {
-                    event.preventDefault()
+                    event.preventDefault();
                     document.querySelector('#modalSubmit').onclick = function() {
                         document.querySelector('#joinProject').submit();
                     }

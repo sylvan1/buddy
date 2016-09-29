@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
 
 from .models import Project
-from users.models import Skill
+from users.models import Skill, User
 from .forms import ProjectForm, SkillFormSet
 
 
@@ -22,8 +22,22 @@ class ProjectDetailView(DetailView):
 
     def post(self, request, *args, **kwargs):
         project = self.get_object()
-        user = request.user
-        project.i_want_to_join.add(user)
+        user = request.user    
+
+        if 'join' in request.POST:
+            project.i_want_to_join.add(user)
+        elif 'accept_candidate' in request.POST:
+            if user == project.owner:
+                candidate_name = request.POST['accept_candidate']
+                candidate = User.objects.get(username=candidate_name)
+                project.members.add(candidate)
+                project.i_want_to_join.remove(candidate)
+        elif 'reject_candidate' in request.POST:
+            if user == project.owner:
+                candidate_name = request.POST['reject_candidate']
+                candidate = User.objects.get(username=candidate_name)
+                project.i_want_to_join.remove(candidate)
+
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
