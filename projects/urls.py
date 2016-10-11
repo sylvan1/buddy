@@ -2,8 +2,19 @@
 from django.conf.urls import url
 
 from . import views
+###
+from .tests import ProjectAutocomplete
+###
+
 
 urlpatterns = [
+
+    url(
+        regex=r'^project-autocomplete/$',
+        view=ProjectAutocomplete.as_view(),
+        name='project-autocomplete',
+    ),
+
     url(
         regex=r'^$',
         view=views.ProjectListView.as_view(),

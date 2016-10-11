@@ -13,6 +13,8 @@ from users.models import Skill
 from .forms import ProjectForm, SkillFormSet
 
 
+
+
 class ProjectListView(ListView):
     model = Project
 
@@ -114,3 +116,8 @@ class ProjectUpdateView(UpdateView):
 class ProjectDeleteView(DeleteView):
     model = Project
     success_url = reverse_lazy('projects:list')
+
+
+def project_filter(request):
+    f = ProjectFilter(request.GET, queryset=Project.objects.all())
+    return render(request, 'projects/project_list.html', {'object_list': f})
