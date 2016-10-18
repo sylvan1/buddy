@@ -23,10 +23,10 @@ urlpatterns = [
 ]
 
 # Let django serve media files with DEBUG = True
-if settings.DEBUG:
-    urlpatterns += [
-        url(
-            r'^media/(?P<path>.*)$', 'django.views.static.serve',
-            {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}
-        ),
-    ]
+# if settings.DEBUG:
+#     urlpatterns += [
+#         url(
+#             r'^media/(?P<path>.*)$', 'django.views.static.serve',
+#             {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}
+#         ),
+#     ]
