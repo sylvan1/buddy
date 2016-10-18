@@ -37,6 +37,11 @@ class ProjectDetailView(DetailView):
                 candidate_name = request.POST['reject_candidate']
                 candidate = User.objects.get(username=candidate_name)
                 project.i_want_to_join.remove(candidate)
+        elif 'remove_member' in request.POST:
+            if user == project.owner:
+                member_name = request.POST['remove_member']
+                member = User.objects.get(username=member_name)
+                project.members.remove(member)
 
         return HttpResponseRedirect(self.get_success_url())
 

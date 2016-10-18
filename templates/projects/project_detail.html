@@ -29,16 +29,80 @@
     {% else %}
         <p>No skills added.</p>
     {% endif %}
+
     <h3>Team members:</h3>
     {% if object.members.all %}
-        <ul>
+
+        <ul style="list-style-type:none;">
         {% for member in object.members.all %}
-            <li>{{ member }}</li>
+            <li>
+            <div class="row">
+
+                <div class="col-md-4">
+                    {{ member }}
+                </div>
+
+                {% if user == object.owner %}
+
+                    <div class="col-md-1">
+                        <form id="removeMember" action="" method="post">{% csrf_token %}
+                            <input type = "hidden" name = "remove_member" value = {{ member }} />
+                            <button id="removeBtn" class="img-responsive" aria-label="Remove">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div id="removeModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Are you sure you want to remove {{ member }} from the project?</h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                    <button id="removeSubmit" type="submit" class="btn btn-success" data-dismiss="modal">Yes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endif %}
+
+            </div>
+            </li>
         {% endfor %}
         </ul>
+
     {% else %}
         <p>No project members yet.</p>
     {% endif %}
+
+<script>
+    var removeBtns = document.querySelectorAll('#removeBtn');
+    
+    var removeModals = document.querySelectorAll('#removeModal');
+    var removeSubmits = document.querySelectorAll('#removeSubmit');
+    var removeMembers = document.querySelectorAll('#removeMember');
+
+    for (var i = 0; i < removeBtns.length; ++i) {
+
+        (function(it){
+
+        removeBtns[it].onclick = function(event) {
+            event.preventDefault();
+
+            removeSubmits[it].onclick = function() {
+                removeMembers[it].submit();
+            }
+            
+            $(removeModals[it]).modal('show');
+        };
+
+        })(i);
+    };
+</script> 
+
     <h3>Willing to join:</h3>
     {% if object.i_want_to_join.all %}
 
