@@ -7,10 +7,13 @@ from django.views.generic import (
     )
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
 from .models import Project
 from users.models import Skill, User
 from .forms import ProjectForm, SkillFormSet
+
+
 
 
 class ProjectListView(ListView):
@@ -133,3 +136,15 @@ class ProjectUpdateView(UpdateView):
 class ProjectDeleteView(DeleteView):
     model = Project
     success_url = reverse_lazy('projects:list')
+
+
+def project_filter(request):
+    f = ProjectFilter(request.GET, queryset=Project.objects.all())
+    return render(request, 'projects/project_list.html', {'object_list': f})
+
+
+def user_projects_list(request):
+    user_projects = Project.objects.filter(owner=request.user)
+    print(user_projects)
+    return render(request, 'users/user_projects_list.html', {'projects_list': user_projects})
+
