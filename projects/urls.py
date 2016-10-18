@@ -10,6 +10,12 @@ from .tests import ProjectAutocomplete
 urlpatterns = [
 
     url(
+        regex=r'^my_projects/$',
+        view=views.user_projects_list,
+        name='user_projects_list'
+    ),
+
+    url(
         regex=r'^project-autocomplete/$',
         view=ProjectAutocomplete.as_view(),
         name='project-autocomplete',
@@ -44,4 +50,6 @@ urlpatterns = [
         view=views.ProjectDeleteView.as_view(),
         name='delete'
     ),
+
+    
 ]

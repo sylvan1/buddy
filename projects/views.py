@@ -7,6 +7,7 @@ from django.views.generic import (
     )
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
 from .models import Project
 from users.models import Skill
@@ -121,3 +122,10 @@ class ProjectDeleteView(DeleteView):
 def project_filter(request):
     f = ProjectFilter(request.GET, queryset=Project.objects.all())
     return render(request, 'projects/project_list.html', {'object_list': f})
+
+
+def user_projects_list(request):
+    user_projects = Project.objects.filter(owner=request.user)
+    print(user_projects)
+    return render(request, 'users/user_projects_list.html', {'projects_list': user_projects})
+
