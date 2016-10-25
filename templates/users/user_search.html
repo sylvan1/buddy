@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}{% load i18n %}
+{% block title %}Users{% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <link href="{% static 'css/user_search.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="col-sm-3 col-md-2 sidebar">
+
+    <h4>Search for users who code in:</h4>
+
+      <form class="float-xs-right" id="searchUser" action="" method="post">
+        {% csrf_token %}
+        {% if searched_for %}
+          <input type="text" class="form-control" name="language" value={{ searched_for }}>
+        {% else %}
+          <input type="text" class="form-control" name="language" placeholder="Search...">
+        {% endif %}
+        <button type="submit">Search</button>
+      </form>
+
+    <p></strong>
+      <ul class="nav nav-sidebar">
+
+        {% if users %}
+          <p>Users found:</p>
+          {% for user in users %}
+            {% if forloop.first %}
+              <li class="active"><a href="#">{{ user }}<span class="sr-only">(current)</span></a></li>
+            {% else %}
+              <li><a href="#">{{ user }}</a></li>
+            {% endif %}
+          {% endfor %}
+        {% elif searched_for %}
+          <p>No users found.</p>
+        {% endif %}
+      </ul>
+    </p>
+
+    </div>
+</div>
+
+{% endblock content %}
