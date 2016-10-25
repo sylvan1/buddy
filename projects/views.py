@@ -14,8 +14,6 @@ from users.models import Skill, User
 from .forms import ProjectForm, SkillFormSet
 
 
-
-
 class ProjectListView(ListView):
     model = Project
 
@@ -25,7 +23,7 @@ class ProjectDetailView(DetailView):
 
     def post(self, request, *args, **kwargs):
         project = self.get_object()
-        user = request.user    
+        user = request.user
 
         if 'join' in request.POST:
             project.i_want_to_join.add(user)
@@ -147,4 +145,3 @@ def user_projects_list(request):
     user_projects = Project.objects.filter(owner=request.user)
     print(user_projects)
     return render(request, 'users/user_projects_list.html', {'projects_list': user_projects})
-
