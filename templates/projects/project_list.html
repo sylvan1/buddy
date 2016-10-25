@@ -8,6 +8,16 @@
 
     <h2>Projects</h2>
 
+    <div class="search-form">
+        <form action="">
+            {{ object_list.form.as_p }}
+            <button id="search_submit" type="submit">Search</button>
+            <a href ="{% url 'projects:filters' %}">Clear Filters</a>
+        </form>
+        
+    </div>
+
+
     <div class="list-group">
         {% for project in object_list %}
             <a href ="{% url 'projects:detail' project.slug %}" class="list-group-item" >
@@ -17,11 +27,7 @@
 
     </div>
 
-    {% if user.is_authenticated %}
-        <a href = "{% url 'projects:create' %}">Add new project</a>
-    {% else %}
-        You have to be logged in to create a new project.
-    {% endif %}
+    <a href = "{% url 'projects:create' %}">Add new project</a>
 
 </div>
 

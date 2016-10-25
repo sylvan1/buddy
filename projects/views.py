@@ -11,6 +11,7 @@ from django.shortcuts import render
 
 from .models import Project
 from users.models import Skill, User
+from .filters import ProjectFilter
 from .forms import ProjectForm, SkillFormSet
 
 
