@@ -36,10 +36,8 @@
               <li><a href="#">{{ user }}</a></li>
             {% endif %}
           {% endfor %}
-        {% else %}
-          {% if searched_for %}
-            <p>No users found.</p>
-          {% endif %}
+        {% elif searched_for %}
+          <p>No users found.</p>
         {% endif %}
       </ul>
     </p>
