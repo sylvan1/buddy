@@ -2,9 +2,6 @@
 from django.conf.urls import url
 
 from . import views
-###
-from .tests import ProjectAutocomplete
-###
 
 
 urlpatterns = [
@@ -13,12 +10,6 @@ urlpatterns = [
         regex=r'^my_projects/$',
         view=views.user_projects_list,
         name='user_projects_list'
-    ),
-
-    url(
-        regex=r'^project-autocomplete/$',
-        view=ProjectAutocomplete.as_view(),
-        name='project-autocomplete',
     ),
 
     url(
@@ -51,5 +42,5 @@ urlpatterns = [
         name='delete'
     ),
 
-    
+
 ]

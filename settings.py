@@ -33,12 +33,7 @@ BUDDY_APPS = (
     'utils',
 )
 
-AUTOCOMPLETE_APP = ( # Must be before 'django.contrib.admin'
-    'dal',
-    'dal_select2',
-)
-
-INSTALLED_APPS = AUTOCOMPLETE_APP + DJANGO_APPS + THIRD_PARTY_APPS + BUDDY_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + BUDDY_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
