@@ -11,4 +11,5 @@ urlpatterns = [
     url(regex=r'^(?P<username>[\w.@+-]+)/$', view=views.UserDetailView.as_view(), name='detail'),
     url(regex=r'^~update/$', view=views.UserUpdateView.as_view(), name='update'),
     url(regex=r'^~delete/$', view=views.UserDeleteView.as_view(), name='delete'),
+    url(regex=r'^~search/$', view=views.UserSearchView, name='search'),
 ]
