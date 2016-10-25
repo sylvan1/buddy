@@ -26,7 +26,7 @@
 
     <p></strong>
       <ul class="nav nav-sidebar">
-        
+
         {% if users %}
           <p>Users found:</p>
           {% for user in users %}
@@ -37,7 +37,9 @@
             {% endif %}
           {% endfor %}
         {% else %}
-        <p>No users found.</p>
+          {% if searched_for %}
+            <p>No users found.</p>
+          {% endif %}
         {% endif %}
       </ul>
     </p>
