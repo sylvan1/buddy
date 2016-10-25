@@ -7,10 +7,13 @@ from django.views.generic import (
     )
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
 from .models import Project
 from users.models import Skill, User
 from .forms import ProjectForm, SkillFormSet
+
+
 
 
 class ProjectListView(ListView):
@@ -37,6 +40,11 @@ class ProjectDetailView(DetailView):
                 candidate_name = request.POST['reject_candidate']
                 candidate = User.objects.get(username=candidate_name)
                 project.i_want_to_join.remove(candidate)
+        elif 'remove_member' in request.POST:
+            if user == project.owner:
+                member_name = request.POST['remove_member']
+                member = User.objects.get(username=member_name)
+                project.members.remove(member)
 
         return HttpResponseRedirect(self.get_success_url())
 
@@ -128,3 +136,15 @@ class ProjectUpdateView(UpdateView):
 class ProjectDeleteView(DeleteView):
     model = Project
     success_url = reverse_lazy('projects:list')
+
+
+def project_filter(request):
+    f = ProjectFilter(request.GET, queryset=Project.objects.all())
+    return render(request, 'projects/project_list.html', {'object_list': f})
+
+
+def user_projects_list(request):
+    user_projects = Project.objects.filter(owner=request.user)
+    print(user_projects)
+    return render(request, 'users/user_projects_list.html', {'projects_list': user_projects})
+
