@@ -138,7 +138,6 @@ class ProjectDeleteView(DeleteView):
 
 
 def project_filter(request):
-    print("xxx")
     f = ProjectFilter(request.GET, queryset=Project.objects.all())
     return render(request, 'projects/project_list.html', {'object_list': f})
 
