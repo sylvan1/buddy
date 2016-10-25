@@ -3,9 +3,11 @@ from braces.views import LoginRequiredMixin
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView, DeleteView
 
-from .models import User
-from .forms import UserUpdateForm
+from django.shortcuts import render
+from random import shuffle
 
+from .models import User, Skill, SkillUser
+from .forms import UserUpdateForm
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
@@ -45,3 +47,20 @@ class UserDeleteView(DeleteView):
 
     def get_object(self):
         return User.objects.get(username=self.request.user.username)
+
+def UserSearchView(request):
+
+    language = None
+    user_list = []
+    if request.method == 'POST' and 'language' in request.POST:
+        language = request.POST['language']
+        skill = Skill.objects.filter(programming_lang=language).first()
+        if skill:
+            user_list = list(User.objects.filter(skilluser__skill=skill))
+            shuffle(user_list)
+
+    context_dict={
+        "searched_for": language,
+        "users": user_list,
+    }
+    return render(request, 'users/user_search.html', context_dict)
