@@ -11,6 +11,7 @@ from django.shortcuts import render
 
 from .models import Project
 from users.models import Skill, User
+from .filters import ProjectFilter
 from .forms import ProjectForm, SkillFormSet
 
 
@@ -137,6 +138,7 @@ class ProjectDeleteView(DeleteView):
 
 
 def project_filter(request):
+    print("xxx")
     f = ProjectFilter(request.GET, queryset=Project.objects.all())
     return render(request, 'projects/project_list.html', {'object_list': f})
 
