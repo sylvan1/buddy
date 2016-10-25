@@ -4,11 +4,14 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView, DeleteView
 
 from .models import User
+from .forms import UserUpdateForm
+
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
     slug_field = "username"
     slug_url_kwarg = "username"
+
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
@@ -20,8 +23,8 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
-    fields = ['username', 'email', 'about_me', 'avatar', 'my_project_experience', 'phone']
     model = User
+    form_class = UserUpdateForm
 
     def get_success_url(self):
         return reverse("users:detail", kwargs={"username": self.request.user.username})
@@ -36,13 +39,9 @@ class UserListView(LoginRequiredMixin, ListView):
     slug_url_kwarg = "username"
 
 
-
 class UserDeleteView(DeleteView):
     model = User
     success_url = reverse_lazy('projects:list')
 
     def get_object(self):
         return User.objects.get(username=self.request.user.username)
-
-
-
