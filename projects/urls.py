@@ -16,6 +16,11 @@ urlpatterns = [
         name='user_projects_list'
     ),
     url(
+        regex=r'^user_participates_in/$',
+        view=views.user_participates_in_list,
+        name='user_participates_in_list'
+    ),
+    url(
         regex=r'^$',
         view=views.ProjectListView.as_view(),
         name='list'
