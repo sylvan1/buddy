@@ -96,6 +96,7 @@ USE_TZ = True
 AUTH_USER_MODEL = 'users.User'
 
 ACCOUNT_ADAPTER = 'users.adapters.AccountAdapter'
+ACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_ADAPTER = 'users.adapters.SocialAccountAdapter'
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
