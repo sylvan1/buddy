@@ -144,5 +144,8 @@ def project_filter(request):
 
 def user_projects_list(request):
     user_projects = Project.objects.filter(owner=request.user)
-    print(user_projects)
     return render(request, 'users/user_projects_list.html', {'projects_list': user_projects})
+
+def user_participates_in_list(request):
+    user_part_in = Project.objects.filter(members=request.user)
+    return render(request, 'users/user_participates_in_list.html', {'user_participates_in_list': user_part_in})
