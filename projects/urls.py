@@ -16,7 +16,7 @@ urlpatterns = [
         name='user_projects_list'
     ),
     url(
-        regex=r'^user_participates_in/$',
+        regex=r'^participation/$',
         view=views.user_participates_in_list,
         name='user_participates_in_list'
     ),
