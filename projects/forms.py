@@ -2,6 +2,8 @@ from django.forms import ModelForm, Textarea, TextInput, NumberInput
 from django.forms.extras import SelectDateWidget
 from django.forms import modelformset_factory
 
+from tinymce.widgets import TinyMCE
+
 from .models import Project
 from users.models import Skill
 
@@ -15,12 +17,16 @@ class ProjectForm(ModelForm):
             'expiration_date', 'number_of_users_required', 'opensource', 'url')
         widgets = {
             'name': Textarea(attrs={'rows': 2, 'cols': 50}),
-            'description': Textarea(attrs={'rows': 2, 'cols': 45}),
+            'description': TinyMCE(mce_attrs={'theme': "advanced"}),
             'expiration_date': SelectDateWidget(),
             'number_of_users_required': NumberInput(
                 attrs={'style': 'text-align:right'}),
             'url': TextInput(attrs={'size': 54}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(ProjectForm, self).__init__(*args, **kwargs)
+        self.fields['description'].required = False
 
 
 class SkillForm(ModelForm):

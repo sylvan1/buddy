@@ -20,6 +20,9 @@ urlpatterns = [
     # Project
     url(r'^projects/',
         include("projects.urls", namespace="projects")),
+
+    # TinyMCE
+    url(r'^tinymce/', include('tinymce.urls')),
 ]
 
 # Let django serve media files with DEBUG = True
