@@ -9,8 +9,11 @@
     {% endif %}
 {% endblock %}
 
-{% block content %}
+{% block tiny %}
+    {{ form.media }}
+{% endblock %}
 
+{% block content %}
     {% if user.is_authenticated %}
 
         {% if object and user == object.owner %}

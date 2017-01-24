@@ -25,6 +25,7 @@ THIRD_PARTY_APPS = (
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.github',
     'debug_toolbar',
+    'tinymce'
 )
 
 BUDDY_APPS = (
@@ -143,3 +144,6 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+TINYMCE_JS_URL = os.path.join(STATIC_URL, "js/tiny_mce/tiny_mce.js")
+TINYMCE_JS_ROOT = os.path.join(BASE_DIR, "static/js/tiny_mce")
