@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles i18n utils %}
+{% load staticfiles i18n %}
 
 {% block title %}{{ user.username }}{% endblock %}
 
@@ -39,31 +39,31 @@
                 </div>
                 <div class="col-xs-6">
                    <div class="form-group col-xs-10 {% if form.errors.username %}has-error{% else %} has-warning {% endif %}">
-                       {{ form.username|add_css:"form-control"|default_if_none:"" }}
+                       {{ form.username|default_if_none:"" }}
                        {% for error in form.username.errors %}
                            <p class="msg-error">{{ error }}</p>
                        {% endfor %}
                    </div>
                     <div class="form-group col-xs-10 {% if form.errors.first_name %}has-error{% endif %}">
-                        {{ form.first_name|add_css:"form-control"|default_if_none:"" }}
+                        {{ form.first_name|default_if_none:"" }}
                         {% for error in form.errors.first_name %}
                             <p class="msg-error">{{ error }}</p>
                         {% endfor %}
                     </div>
                     <div class="form-group col-xs-10 {% if form.errors.last_name %}has-error{% endif %}">
-                        {{ form.last_name|add_css:"form-control"|default_if_none:"" }}
+                        {{ form.last_name|default_if_none:"" }}
                         {% for error in form.errors.last_name %}
                             <p class="msg-error">{{ error }}</p>
                         {% endfor %}
                     </div>
                     <div class="form-group col-xs-10 {% if form.errors.email %}has-error{% else %}has-warning{% endif %}">
-                        {{ form.email|add_css:"form-control"|default_if_none:"" }}
+                        {{ form.email|default_if_none:"" }}
                         {% for error in form.errors.email %}
                             <p class="msg-error">{{ error }}</p>
                         {% endfor %}
                     </div>
                     <div class="form-group col-xs-10 {% if form.errors.phone %}has-error{% endif %}">
-                        {{ form.phone|add_css:"form-control"|default_if_none:"" }}
+                        {{ form.phone|default_if_none:"" }}
                         {% for error in form.errors.phone %}
                             <p class="msg-error">{{ error }}</p>
                         {% endfor %}
@@ -76,7 +76,7 @@
             <div class="row">
                 <div class="form-group col-xs-8 {% if form.errors.about_me %}has-error{% endif %}">
                     <p>About me</p>
-                    {{ form.about_me|add_css:"form-control"|default_if_none:"" }}
+                    {{ form.about_me|default_if_none:"" }}
                     {% for error in form.errors.about_me %}
                         <p class="msg-error">{{ error }}</p>
                     {% endfor %}
