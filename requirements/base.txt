@@ -2,4 +2,4 @@ django-allauth==0.28.0
 django-braces==1.9.0
 Django==1.10.2
 Pillow==3.4.1
-django-crispy-forms==1.4.0
+django-crispy-forms==1.6.1
