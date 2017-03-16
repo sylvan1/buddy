@@ -3,3 +3,4 @@
 ipython
 django-debug-toolbar
 django-extensions
+factory_boy
