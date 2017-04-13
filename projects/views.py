@@ -10,14 +10,17 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 from .models import Project
-from users.models import Skill, User
 from .filters import ProjectFilter
 from .forms import ProjectForm, SkillFormSet
+from configs.projects import PAGINATOR
+from users.models import Skill, User
 
 
 class ProjectListView(ListView):
     model = Project
-
+    context_object_name = 'projects'
+    paginate_by = PAGINATOR
+    queryset = Project.objects.all()
 
 class ProjectDetailView(DetailView):
     model = Project
@@ -142,9 +145,10 @@ def project_filter(request):
     return render(request, 'projects/project_list.html', {'object_list': f})
 
 
-def user_projects_list(request):
-    user_projects = Project.objects.filter(owner=request.user)
-    return render(request, 'users/user_projects_list.html', {'projects_list': user_projects})
+class UserProjectListView(ProjectListView):
+
+    def get_queryset(self):
+        return Project.objects.filter(owner=self.request.user)
 
 def user_participates_in_list(request):
     user_part_in = Project.objects.filter(members=request.user)

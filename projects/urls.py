@@ -4,15 +4,15 @@ from django.conf.urls import url
 from . import views
 
 
-urlpatterns = [ 
+urlpatterns = [
     url(
         regex=r'^filters/$',
         view=views.project_filter,
         name='filters'
     ),
     url(
-        regex=r'^my_projects/$',
-        view=views.user_projects_list,
+        regex=r'^my_projects/(?P<page>[0-9]+)/$',
+        view=views.UserProjectListView.as_view(),
         name='user_projects_list'
     ),
     url(
